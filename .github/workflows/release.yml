@@ -24,7 +24,8 @@ jobs:
           auto-install: true
       - run: rustup target add wasm32-wasip1
       - id: build
-        uses: moonrepo/build-wasm-plugin@v0.4
+        # Pinned to unreleased commit that fixes wasm32-wasi -> wasm32-wasip1 (post v0.4.2)
+        uses: moonrepo/build-wasm-plugin@ca352089beda2ce681f569b3f9aa7d074058e6d7
       - if: ${{ github.event_name == 'push' && startsWith(github.ref, 'refs/tags/') }}
         uses: ncipollo/release-action@v1
         with:
