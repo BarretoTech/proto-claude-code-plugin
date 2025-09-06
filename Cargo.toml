@@ -1,5 +1,5 @@
 [package]
-name = "claude_code_plugin"
+name = "claude_plugin"
 version = "0.1.0"
 edition = "2021"
 license = "MIT"
