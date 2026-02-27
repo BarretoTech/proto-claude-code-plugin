@@ -1,0 +1,29 @@
+name: Release
+on:
+  push:
+    tags:
+      - "v[0-9]+*"
+  pull_request:
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: moonrepo/setup-toolchain@v0
+        with:
+          auto-install: true
+      - run: rustup target add wasm32-wasip1
+      - id: build
+        uses: moonrepo/build-wasm-plugin@v0
+      - if: ${{ github.event_name == 'push' && startsWith(github.ref, 'refs/tags/') }}
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: builds/*
+          body: ${{ steps.build.outputs.changelog-entry }}
+          makeLatest: true
+          prerelease: ${{ steps.build.outputs.prerelease }}
+          skipIfReleaseExists: true
