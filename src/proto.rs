@@ -11,9 +11,7 @@ extern "ExtismHost" {
 static NAME: &str = "Claude Code";
 
 #[plugin_fn]
-pub fn register_tool(
-    Json(_): Json<RegisterToolInput>,
-) -> FnResult<Json<RegisterToolOutput>> {
+pub fn register_tool(Json(_): Json<RegisterToolInput>) -> FnResult<Json<RegisterToolOutput>> {
     Ok(Json(RegisterToolOutput {
         name: NAME.into(),
         type_of: PluginType::CommandLine,
@@ -61,7 +59,10 @@ pub fn download_prebuilt(
         "claude"
     };
 
-    let download_url = format!("{}/{}/{}/{}", config.dist_url, version, platform, binary_name);
+    let download_url = format!(
+        "{}/{}/{}/{}",
+        config.dist_url, version, platform, binary_name
+    );
 
     Ok(Json(DownloadPrebuiltOutput {
         download_url,
