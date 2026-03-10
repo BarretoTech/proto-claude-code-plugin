@@ -78,9 +78,9 @@ pub fn locate_executables(
     let env = get_host_environment()?;
 
     let exe_name = if env.os == HostOS::Windows {
-        "claude-code.exe"
+        "claude.exe"
     } else {
-        "claude-code"
+        "claude"
     };
 
     let mut exes = HashMap::default();
