@@ -24,7 +24,7 @@ jobs:
           auto-install: true
       - run: rustup target add wasm32-wasip1
       - id: build
-        uses: moonrepo/build-wasm-plugin@v0
+        uses: moonrepo/build-wasm-plugin@v0.4
       - if: ${{ github.event_name == 'push' && startsWith(github.ref, 'refs/tags/') }}
         uses: ncipollo/release-action@v1
         with:
