@@ -4,6 +4,12 @@ on:
     tags:
       - "v[0-9]+*"
   pull_request:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Tag to release (e.g. v0.1.0)"
+        required: true
+        type: string
 
 jobs:
   build:
@@ -16,7 +22,6 @@ jobs:
       - uses: moonrepo/setup-toolchain@v0
         with:
           auto-install: true
-      - run: rustup target add wasm32-wasip1
       - id: build
         uses: moonrepo/build-wasm-plugin@v0
       - if: ${{ github.event_name == 'push' && startsWith(github.ref, 'refs/tags/') }}
@@ -26,4 +31,11 @@ jobs:
           body: ${{ steps.build.outputs.changelog-entry }}
           makeLatest: true
           prerelease: ${{ steps.build.outputs.prerelease }}
+          skipIfReleaseExists: true
+      - if: ${{ github.event_name == 'workflow_dispatch' }}
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: builds/*
+          tag: ${{ inputs.tag }}
+          makeLatest: true
           skipIfReleaseExists: true
