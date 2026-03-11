@@ -396,7 +396,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "claude_code_plugin"
+name = "claude_plugin"
 version = "0.1.0"
 dependencies = [
  "extism-pdk",
