@@ -77,14 +77,17 @@ pub fn locate_executables(
 ) -> FnResult<Json<LocateExecutablesOutput>> {
     let env = get_host_environment()?;
 
-    let exe_name = if env.os == HostOS::Windows {
-        "claude.exe"
-    } else {
-        "claude"
-    };
+    // Claude Code releases are raw binaries, not archives. When proto installs
+    // a non-archive download, it renames the file on disk to the plugin's
+    // configured ID (e.g. `claude-code.exe` for `proto plugin add claude-code`),
+    // so the executable name must be derived from the ID at runtime.
+    let id = get_plugin_id()?;
 
     let mut exes = HashMap::default();
-    exes.insert("claude".to_string(), ExecutableConfig::new(exe_name));
+    exes.insert(
+        "claude".to_string(),
+        ExecutableConfig::new_primary(env.os.get_exe_name(&id)),
+    );
 
     Ok(Json(LocateExecutablesOutput {
         exes,
