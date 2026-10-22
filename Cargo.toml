@@ -14,6 +14,11 @@ wasm = []
 
 [dependencies]
 extism-pdk = "1.4.1"
+# Not used directly. pest >= 2.9.4 pulls in stacker/psm via its default `std`
+# feature (enabled by proto's version_spec), which adds an
+# `env::rust_psm_stack_pointer` import that proto rejects as an incompatible
+# runtime. Remove once version_spec or pest stops enabling it on wasm.
+pest = "=2.9.2"
 proto_pdk = "0.36.0"
 serde = "1.0.203"
 serde_json = "1.0"

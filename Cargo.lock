@@ -625,6 +625,7 @@ name = "claude_plugin"
 version = "0.3.1"
 dependencies = [
  "extism-pdk",
+ "pest",
  "proto_pdk",
  "proto_pdk_test_utils",
  "serde",
