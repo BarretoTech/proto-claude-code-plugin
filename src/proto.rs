@@ -41,7 +41,7 @@ pub fn download_prebuilt(
 
     check_supported_os_and_arch(
         NAME,
-        &env,
+        env,
         permutations![
             HostOS::MacOS => [HostArch::Arm64, HostArch::X64],
             HostOS::Linux => [HostArch::Arm64, HostArch::X64],
@@ -51,7 +51,7 @@ pub fn download_prebuilt(
 
     let version = input.context.version.to_string();
     let config = get_tool_config::<ClaudeCodePluginConfig>()?;
-    let platform = get_claude_platform(&env)?;
+    let platform = get_claude_platform(env)?;
 
     let binary_name = if env.os == HostOS::Windows {
         "claude.exe"

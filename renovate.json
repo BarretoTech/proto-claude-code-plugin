@@ -1,4 +1,11 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["local>BarretoTech/renovate-config"]
+  "extends": ["local>BarretoTech/renovate-config"],
+  "packageRules": [
+    {
+      "description": "pest >= 2.9.4 adds a wasm import proto rejects; see the comment in Cargo.toml",
+      "matchPackageNames": ["pest"],
+      "enabled": false
+    }
+  ]
 }
