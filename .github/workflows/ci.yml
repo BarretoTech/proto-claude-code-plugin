@@ -39,3 +39,17 @@ jobs:
           auto-install: true
       - run: rustup target add wasm32-wasip1
       - run: cargo build --target wasm32-wasip1
+
+  adrs:
+    name: Enterprise ADRs
+    runs-on: ubuntu-slim
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Archgate
+        uses: archgate/setup-action@2e1631ad3551f8d044307b1114b414859b0a935f # v1.0.0
+        with:
+          version: v0.60.0
+      - name: Check enterprise ADRs
+        run: archgate check --strict
